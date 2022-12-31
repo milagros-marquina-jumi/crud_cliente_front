@@ -1,0 +1,8 @@
+.derecha{
+  text-align: right;
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}

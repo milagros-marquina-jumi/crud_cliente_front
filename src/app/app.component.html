@@ -1,0 +1,188 @@
+<div class="container mt-3">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="text-center">Mantenimiento de Cliente</h4>
+
+      <br>
+      <form (ngSubmit)="fnGuardarDatos(datosForm)" #datosForm="ngForm">
+        <div class="row">
+          <div class="col-sm-10">
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label derecha">Nombres:</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" maxlength="30" required pattern="[a-zA-Z Ññ]*"
+                onkeypress="return soloLetras(event)"
+                name="nombres" [(ngModel)]="cliente.nombres" #nombres="ngModel"
+                [ngClass]="{'is-invalid': !nombres.valid && (nombres.dirty || nombres.touched)}">
+
+                <div style="color:red;" *ngIf="nombres.invalid && (nombres.dirty || nombres.touched)">
+                  <div *ngIf="nombres.errors?.['required']">
+                    El nombre es requerido
+                  </div>
+                  <div *ngIf="nombres.errors?.['pattern']">
+                    Debe contener solo letras
+                  </div>
+                </div>
+              </div>
+
+              <label class="col-sm-2 col-form-label derecha">Fecha Nacimiento:</label>
+              <div class="col-sm-3">
+                <input type="date" class="form-control" required pattern="^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$"
+                name="fechaNac" [(ngModel)]="cliente.fechaNac" #fechaNac="ngModel"
+                [ngClass]="{'is-invalid': !fechaNac.valid && (fechaNac.dirty || fechaNac.touched)}">
+
+                <div style="color:red;" *ngIf="fechaNac.invalid && (fechaNac.dirty || fechaNac.touched)">
+                  <div *ngIf="fechaNac.errors?.['required']">
+                    El fecha de nac. es requerido
+                  </div>
+                  <div *ngIf="fechaNac.errors?.['pattern']">
+                    Formato no válido
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <button [disabled]="!datosForm.form.valid || !estado" class="btn btn-success">Registrar</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-10">
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label derecha">Apellido Paterno:</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" required maxlength="50" pattern="[a-zA-Z Ññ]*"
+                onkeypress="return soloLetras(event)"
+                name="apePaterno" [(ngModel)]="cliente.apePaterno" #apePaterno="ngModel"
+                [ngClass]="{'is-invalid': !apePaterno.valid && (apePaterno.dirty || apePaterno.touched)}"
+                >
+                <div style="color:red;" *ngIf="apePaterno.invalid && (apePaterno.dirty || apePaterno.touched)">
+                  <div *ngIf="apePaterno.errors?.['required']">
+                    El ap. paterno es requerido
+                  </div>
+                  <div *ngIf="apePaterno.errors?.['pattern']">
+                    Debe contener solo letras
+                  </div>
+                </div>
+              </div>
+
+              <label class="col-sm-2 col-form-label derecha">Direccion:</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" required maxlength="120"
+                name="direccion" [(ngModel)]="cliente.direccion" #direccion="ngModel"
+                [ngClass]="{'is-invalid': !direccion.valid && (direccion.dirty || direccion.touched)}"
+                >
+                <div style="color:red;" *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)">
+                  <div *ngIf="direccion.errors?.['required']">
+                    La dirección es requerido
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <button [disabled]="estado" class="btn btn-info">Actualizar</button>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-sm-10">
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label derecha">Apellido Materno:</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" required maxlength="50" pattern="[a-zA-Z Ññ]*"
+                onkeypress="return soloLetras(event)"
+                name="apeMaterno" [(ngModel)]="cliente.apeMaterno" #apeMaterno="ngModel"
+                [ngClass]="{'is-invalid': !apeMaterno.valid && (apeMaterno.dirty || apeMaterno.touched)}"
+                >
+                <div style="color:red;" *ngIf="apeMaterno.invalid && (apeMaterno.dirty || apeMaterno.touched)">
+                  <div *ngIf="apeMaterno.errors?.['required']">
+                    El ap. materno es requerido
+                  </div>
+                  <div *ngIf="apeMaterno.errors?.['pattern']">
+                    Debe contener solo letras
+                  </div>
+                </div>
+              </div>
+
+              <label class="col-sm-2 col-form-label derecha">Correo:</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" required maxlength="80" email
+                name="correo" [(ngModel)]="cliente.correo" #correo="ngModel"
+                [ngClass]="{'is-invalid': !correo.valid && (correo.dirty || correo.touched)}"
+                >
+                <div style="color:red;" *ngIf="correo.invalid && (correo.dirty || correo.touched)">
+                  <div *ngIf="correo.errors?.['required']">
+                    El correo es requerido
+                  </div>
+                  <div *ngIf="correo.errors?.['email']">
+                    Formato no válido
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <a href="javascript:void(0)" [class.disabled]="estado" (click)="fnConfEliminar(datosForm)" class="btn btn-danger">Eliminar</a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-10">
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label derecha">Sexo:</label>
+              <div class="col-sm-3">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="sexo" id="sexoMasculino" value="Masculino"
+                  name="sexo" [(ngModel)]="cliente.sexo" #sexo="ngModel" required>
+                  <label class="form-check-label" for="sexoMasculino">Masculino</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="sexo" id="sexoFemenino" value="Femenino"
+                  name="sexo" [(ngModel)]="cliente.sexo" #sexo="ngModel" required>
+                  <label class="form-check-label" for="sexoFemenino">Femenino</label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Nombres</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
+            <th>Fecha Nacimiento</th>
+            <th>Sexo</th>
+            <th>Dirección</th>
+            <th>Correo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of clientes">
+            <td>
+              <a (click)="fnCargarDatos(item)" href="javascript:void(0)">Seleccionar</a>
+            </td>
+            <td>{{item.nombres}}</td>
+            <td>{{item.apePaterno}}</td>
+            <td>{{item.apeMaterno}}</td>
+            <td>{{item.fechaNac}}</td>
+            <td>{{item.sexo}}</td>
+            <td>{{item.direccion}}</td>
+            <td>{{item.correo}}</td>
+          </tr>
+          <tr *ngIf="clientes.length == 0">
+            <td colspan="7" class="text-center">No hay registros</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
